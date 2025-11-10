@@ -17,11 +17,12 @@ import java.util.stream.Collectors;
 
 public class JwtFilter extends OncePerRequestFilter {
 
-    private final com.rigg.ads.security.JwtUtil jwtUtil;
+    private final JwtUtil jwtUtil;
 
-    public JwtFilter(com.rigg.ads.security.JwtUtil jwtUtil) {
+    public JwtFilter(JwtUtil jwtUtil) {
         this.jwtUtil = jwtUtil;
     }
+
 
     @Override
     protected void doFilterInternal(HttpServletRequest request,

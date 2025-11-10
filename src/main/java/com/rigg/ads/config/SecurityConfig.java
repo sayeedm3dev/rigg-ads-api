@@ -1,7 +1,7 @@
 package com.rigg.ads.config;
 
 import com.rigg.ads.components.JwtFilter;
-import com.rigg.ads.security.JwtUtil;
+import com.rigg.ads.components.JwtUtil;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;

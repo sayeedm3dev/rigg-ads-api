@@ -1,4 +1,4 @@
-package com.rigg.ads.security;
+package com.rigg.ads.components;
 
 import com.rigg.ads.entity.Role;
 import io.jsonwebtoken.*;
@@ -18,10 +18,11 @@ public class JwtUtil {
     private long jwtExpirationMs;
 
 
-    public String generateToken(String username, Set<Role> roles) {
+    public String generateToken(String username, Set<Role> roles, Long clientId) {
         return Jwts.builder()
                 .setSubject(username)
                 .claim("roles", roles)
+                .claim("clientId",clientId)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + 86400000))
                 .signWith(SignatureAlgorithm.HS512, jwtSecret)
