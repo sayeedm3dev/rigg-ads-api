@@ -1,0 +1,227 @@
+> Authentication:
+
+    http://localhost:8080/api/auth/register
+        {
+          "email": "sajjad@gmail.com",
+          "password": "123456",
+          "role": "ROLE_USER"
+        }
+
+    http://localhost:8080/api/auth/login
+        {
+          "email": "sajjad@gmail.com",
+          "password": "123456"
+        }
+    response:
+        {
+            "token": "eyJhbGcixxxxxI4U4nd_Q"
+        }
+
+    http://localhost:8080/api/test/user
+        Authorization: Bearer <token>
+
+> Client CRUD:
+
+    Base URL: http://localhost:8080/api/clients
+        Headers (all requests): Content-Type: application/json
+
+    Create Client
+        Method: POST
+        URL: /api/clients
+        Body (JSON):
+            {
+              "title": "Mr.",
+              "firstName": "Sajjad",
+              "lastName": "Hossain",
+              "email": "sajjad@example.com",
+              "countryCode": "+880",
+              "phone": "1234567890",
+              "businessName": "DIU Tech",
+              "businessType": "IT",
+              "website": "https://diu.edu.bd",
+              "address": "123 Dhaka Road",
+              "city": "Dhaka",
+              "country": "Bangladesh",
+              "image": null
+            }
+
+    Get All Clients
+        Method: GET
+        URL: /api/clients
+        Response (200 OK):
+            [
+              {
+                "id": 1,
+                "title": "Mr.",
+                "firstName": "Sajjad",
+                "lastName": "Hossain",
+                "email": "sajjad@example.com",
+                "countryCode": "+880",
+                "phone": "1234567890",
+                "businessName": "DIU Tech",
+                "businessType": "IT",
+                "website": "https://diu.edu.bd",
+                "address": "123 Dhaka Road",
+                "city": "Dhaka",
+                "country": "Bangladesh",
+                "image": null
+              },
+              {
+                "id": 2,
+                "title": "Ms.",
+                "firstName": "Maria",
+                "lastName": "Smith",
+                "email": "maria@example.com",
+                "countryCode": "+1",
+                "phone": "9876543210",
+                "businessName": "Tech Solutions",
+                "businessType": "IT",
+                "website": "https://techsolutions.com",
+                "address": "456 Main Street",
+                "city": "New York",
+                "country": "USA",
+                "image": null
+              }
+            ]
+
+    Get Single Client
+        Method: GET
+        URL: /api/clients/{id}
+        Example: /api/clients/1
+        Response (200 OK):
+            {
+              "id": 1,
+              "title": "Mr.",
+              "firstName": "Sajjad",
+              "lastName": "Hossain",
+              "email": "sajjad@example.com",
+              "countryCode": "+880",
+              "phone": "1234567890",
+              "businessName": "DIU Tech",
+              "businessType": "IT",
+              "website": "https://diu.edu.bd",
+              "address": "123 Dhaka Road",
+              "city": "Dhaka",
+              "country": "Bangladesh",
+              "image": null
+            }
+
+    Update Client
+        Method: PUT
+        URL: /api/clients/{id}
+        Example: /api/clients/1
+        Body (JSON):
+            {
+              "title": "Dr.",
+              "firstName": "Sajjad",
+              "lastName": "Hossain",
+              "email": "sajjad_new@example.com",
+              "countryCode": "+880",
+              "phone": "1234567890",
+              "businessName": "DIU Tech Solutions",
+              "businessType": "IT",
+              "website": "https://diu.edu.bd",
+              "address": "123 Dhaka Road",
+              "city": "Dhaka",
+              "country": "Bangladesh",
+              "image": null
+            }
+
+    Delete Client
+        Method: DELETE
+        URL: /api/clients/{id}
+        Example: /api/clients/1
+        Response (204 No Content)
+
+> Campaign details CRUD
+
+Base URL: http://localhost:8080/api/campaigns
+
+    Create Campaign for a Client
+        Endpoint: POST /client/{clientId}
+        URL Params:
+        clientId → ID of the client
+            {
+              "campaignName": "Black Friday Sale",
+              "goal": "Increase sales by 30%",
+              "description": "Campaign for holiday season",
+              "amount": 5000,
+              "startDate": "2025-11-10",
+              "endDate": "2025-11-30"
+            }
+
+    Get Campaigns by Client
+        Endpoint: GET /client/{clientId}
+        URL Params:
+        clientId → ID of the client
+        Response (JSON Array):
+            [
+              {
+                "id": 1,
+                "campaignName": "Black Friday Sale",
+                "goal": "Increase sales by 30%",
+                "description": "Campaign for holiday season",
+                "amount": 5000,
+                "startDate": "2025-11-10",
+                "endDate": "2025-11-30",
+                "client": {
+                  "id": 1,
+                  "firstName": "Md Sajjad",
+                  "lastName": "Hossain"
+                }
+              }
+            ]
+
+    Get Single Campaign
+        Endpoint: GET /{id}
+        URL Params:
+        id → campaign ID
+        Response (JSON):
+            {
+              "id": 1,
+              "campaignName": "Black Friday Sale",
+              "goal": "Increase sales by 30%",
+              "description": "Campaign for holiday season",
+              "amount": 5000,
+              "startDate": "2025-11-10",
+              "endDate": "2025-11-30",
+              "client": {
+                "id": 1,
+                "firstName": "Md Sajjad",
+                "lastName": "Hossain"
+              }
+            }
+
+    Update Campaign
+        Endpoint: PUT /{campaignId}
+        URL Params:
+        campaignId → campaign ID
+        Request Body:
+        JSON Example 1: Update campaign only (no client change)
+            {
+              "campaignName": "Black Friday Sale Updated",
+              "goal": "Increase sales by 35%",
+              "description": "Updated campaign description",
+              "amount": 5500,
+              "startDate": "2025-11-12",
+              "endDate": "2025-11-30"
+            }
+
+        JSON Example 2: Update campaign and change client
+            {
+              "campaignName": "Black Friday Sale Updated",
+              "goal": "Increase sales by 35%",
+              "description": "Updated campaign description",
+              "amount": 5500,
+              "startDate": "2025-11-12",
+              "endDate": "2025-11-30",
+              "client": {
+                "id": 3
+              }
+            }
+
+    Delete Campaign
+        Endpoint: DELETE /{id}
+            URL Params:
+            id → campaign ID
+            Response: 204 No Content
