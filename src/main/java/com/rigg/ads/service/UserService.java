@@ -40,4 +40,25 @@ public class UserService {
     public Optional<User> findByUsername(String username) {
         return userRepository.findByUsername(username);
     }
+
+    // Fetch user by clientId
+    public Optional<User> getUserByClientId(Long clientId) {
+        return userRepository.findByClientId(clientId);
+    }
+
+    // Update user profile
+    public User updateUserProfile(Long userId, String username, String email, String password) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        user.setUsername(username);
+        user.setEmail(email);
+        if(password != null && !password.isEmpty()) {
+            user.setPassword(passwordEncoder.encode(password));
+        }
+        return userRepository.save(user);
+    }
+
+
+
 }
